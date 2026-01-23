@@ -1,5 +1,6 @@
 package com.example.test12.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore; // 1. මේ Import එක අනිවාර්යයි
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -12,9 +13,10 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String department_name;
-    // private int department_id; // මේක ID එකට පටලැවෙනවා නම් අයින් කරන්න, නැත්නම් තියන්න.
+    // 2. නම හරියට හැදුවා (Java Standard එකට)
+    private String departmentName;
 
     @OneToMany(mappedBy = "department")
-    private List<Student> students; // නම වෙනස් කළා 'students' කියලා
+    @JsonIgnore // 3. මේක අනිවාර්යයෙන් දාන්න! (නැත්නම් System එක Loop වෙලා හිර වෙනවා)
+    private List<Student> students;
 }

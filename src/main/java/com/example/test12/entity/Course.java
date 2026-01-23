@@ -1,5 +1,6 @@
 package com.example.test12.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore; // 1. මේ Import එක අනිවාර්යයි
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -15,7 +16,8 @@ public class Course {
     private String title;
     private String credit;
 
-    // මෙතන mappedBy = "courses" වෙන්න ඕනේ (Student එකේ අපි දැම්මේ 'courses' නේ)
+    // මෙතන mappedBy = "courses" හරි (Student එකේ නම 'courses' නිසා)
     @ManyToMany(mappedBy = "courses")
+    @JsonIgnore // 2. මේකෙන් තමයි Loop එක කඩන්නේ. නැත්නම් StackOverflow Error එනවා.
     private List<Student> students;
 }
